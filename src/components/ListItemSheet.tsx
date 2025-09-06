@@ -1,0 +1,85 @@
+import { useTranslation } from "react-i18next";
+import { IoMdClose } from "react-icons/io";
+import { Sheet } from "react-modal-sheet";
+import type { ListItem } from "../types/dappTypes";
+
+type ListItemSheetProps = {
+    open: boolean;
+    onClose: () => void;
+    item?: ListItem | null;
+};
+
+const ListItemSheet = ({ open, onClose, item }: ListItemSheetProps) => {
+    const { t, i18n } = useTranslation();
+    if (!item) return null;
+
+    return (
+        <Sheet isOpen={open} onClose={onClose} snapPoints={[600]} >
+            <Sheet.Container style={{ maxHeight: 600 }}>
+                <Sheet.Header className="w-full flex justify-end p-2 z-50">
+                    <div className="text-black p-2" onClick={onClose} >
+                        <IoMdClose size={32} />
+                    </div>
+                </Sheet.Header>
+
+                <Sheet.Content >
+                    <div className="px-8 flex flex-col gap-y-4 h-full" >
+                        <div className="flex items-center gap-x-4">
+                            <img
+                                src={item.icon}
+                                alt={item.name}
+                                className="w-20 h-20 rounded-2xl object-cover shadow"
+                            />
+                            <div className="flex flex-col text-black">
+                                <span className="text-2xl font-bold">{item.name}</span>
+                                {item.network && (
+                                    <span className="text-gray-500 text-sm">
+                                        {Array.isArray(item.network)
+                                            ? item.network.join(", ")
+                                            : item.network}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        {item.link && (
+                            <a
+                                href={item.link}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="!text-black text-lg !font-normal"
+                            >
+                                {item.link}
+                            </a>
+                        )}
+
+                        <div className="mt-5 text-2xl font-bold text-black">Description</div>
+
+                        {item.description && (
+                            <p className="text-gray-500">
+                                {
+                                    // 언어 우선순위: 현재 언어 → 첫 번째 언어
+                                    item.description[i18n.language.split("-")[0]] ??
+                                    item.description[Object.keys(item.description)[0]]
+                                }
+                            </p>
+                        )}
+
+                        <div className=" flex-1 flex justify-center items-end pb-6">
+                            <div
+                                className="bg-emerald-500 w-fit h-fit px-10 py-3 rounded-full text-white font-bold"
+                                onClick={() => window.open(item.link, "_blank")}
+                            >
+                                {t("go_to_dapp")}
+                            </div>
+                        </div>
+                    </div>
+
+                </Sheet.Content>
+            </Sheet.Container>
+            <Sheet.Backdrop onTap={onClose} />
+        </Sheet>
+    );
+};
+
+export default ListItemSheet;
