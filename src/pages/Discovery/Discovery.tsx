@@ -6,7 +6,7 @@ import ListItemSheet from "../../components/ListItemSheet";
 import { useDappsData } from "../../hooks/useDappsData";
 import { CURRENT_ENV } from "../../lib/env";
 import type { ListItem } from "../../types/dappTypes";
-import Banner from "./Banner";
+import BannerSection from "./BannerSection";
 
 const DiscoveryPage = () => {
     const { t, i18n } = useTranslation();
@@ -45,7 +45,7 @@ const DiscoveryPage = () => {
     return (
         <div className="flex flex-col min-h-screen w-screen bg-white text-black">
             {/* 배너 영역 */}
-            <Banner />
+            <BannerSection />
 
             {/* 즐겨찾기 영역 */}
             <div className="p-8 w-full flex flex-col gap-y-2">
