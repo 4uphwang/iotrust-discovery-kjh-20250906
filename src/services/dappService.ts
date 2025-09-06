@@ -7,14 +7,14 @@ export const DappService = {
     getDapps: async (): Promise<ListItem[]> => {
         if (CURRENT_ENV === "dev") {
             // mock 환경에서는 배열에서 삭제만 하고 반환
-            return dappList;
+            return Promise.resolve(dappList);
         }
         return serviceInstance.get<ListItem[]>("/dapps").then(res => res.data) ?? [];
     },
 
     getFavorites: async (): Promise<ListItem[]> => {
         if (CURRENT_ENV === "dev") {
-            return mockFavorites;
+            return Promise.resolve(mockFavorites);
         }
         return serviceInstance.get<ListItem[]>("/favorites").then(res => res.data) ?? [];
     },

@@ -20,8 +20,6 @@ export const useDappsData = () => {
             setDapps(dappsData);
             setFavorites(favoritesData);
         } catch (err: any) {
-            setDapps([]);
-            setFavorites([]);
             setError(err);
         } finally {
             setLoading(false);
