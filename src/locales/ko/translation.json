@@ -5,5 +5,8 @@
     "dapp_list_title": "목록",
     "go_to_dapp": "서비스 바로가기",
     "button_cancel": "취소",
-    "button_confirm": "확인"
+    "button_confirm": "확인",
+
+    "dapp_no_favorites":"즐겨찾기가 존재하지 않습니다",
+    "dapp_no_dapps_available": "사용 가능한 DApp이 없습니다"
 }

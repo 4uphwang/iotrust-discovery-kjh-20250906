@@ -8,6 +8,7 @@ export const DappService = {
         if (CURRENT_ENV === "dev") {
             // mock 환경에서는 배열에서 삭제만 하고 반환
             return Promise.resolve(dappList);
+            // return Promise.reject(new Error("Failed to fetch DApps"));
         }
         return serviceInstance.get<ListItem[]>("/dapps").then(res => res.data) ?? [];
     },
@@ -15,6 +16,7 @@ export const DappService = {
     getFavorites: async (): Promise<ListItem[]> => {
         if (CURRENT_ENV === "dev") {
             return Promise.resolve(mockFavorites);
+            // return Promise.reject(new Error("Failed to fetch favorites"));
         }
         return serviceInstance.get<ListItem[]>("/favorites").then(res => res.data) ?? [];
     },

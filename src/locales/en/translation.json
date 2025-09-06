@@ -5,5 +5,8 @@
     "dapp_list_title": "List",
     "go_to_dapp": "Go",
     "button_cancel": "Cancel",
-    "button_confirm": "Confirm"
+    "button_confirm": "Confirm",
+
+    "dapp_no_favorites":"You don't have any favorites yet",
+    "dapp_no_dapps_available_en": "There are no DApps available at the moment"
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import ListItemCard from "../../components/ListItemCard";
+import ListItemCardSkeleton from "../../components/ListItemCardSkeleton";
 import ListItemSheet from "../../components/ListItemSheet";
 import { useDappsData } from "../../hooks/useDappsData";
 import { CURRENT_ENV } from "../../lib/env";
@@ -10,7 +11,8 @@ import BannerSection from "./BannerSection";
 
 const DiscoveryPage = () => {
     const { t, i18n } = useTranslation();
-    const { dapps, favorites, deleteFavorite } = useDappsData();
+    const { dapps, favorites, deleteFavorite, loadingDapps, loadingFavorites, errorDapps, errorFavorites, fetchAll } = useDappsData();
+
     const visibleDapps = dapps.filter(item =>
         (!item.visibleFor || item.visibleFor.includes(i18n.language)) &&
         (!item.platform || item.platform.includes('iOS')) &&
@@ -50,6 +52,15 @@ const DiscoveryPage = () => {
             {/* 즐겨찾기 영역 */}
             <div className="p-8 w-full flex flex-col gap-y-2">
                 <div className="text-xl text-left">{t('dapp_favorite_title')}</div>
+
+                {loadingFavorites && Array.from({ length: 3 }).map((_, idx) => (
+                    <ListItemCardSkeleton key={idx} />
+                ))}
+
+                {!!errorFavorites || (!loadingFavorites && favorites.length === 0) && (
+                    <div className="py-4 text-center text-gray-500">{t('dapp_no_favorites')}</div>
+                )}
+
                 {favorites.map((item) => (
                     <ListItemCard
                         item={item}
@@ -64,6 +75,16 @@ const DiscoveryPage = () => {
             {/* 서비스 리스트 영역 */}
             <div className="px-8 w-full flex flex-col gap-y-2">
                 <div className="text-xl text-left">{t('dapp_list_title')}</div>
+
+                {loadingDapps && Array.from({ length: 4 }).map((_, idx) => (
+                    <ListItemCardSkeleton key={idx} />
+                ))}
+
+
+                {!!errorDapps || (!loadingDapps && visibleDapps.length === 0) && (
+                    <div className="py-4 text-center text-gray-500">{t('dapp_no_dapps_available')}</div>
+                )}
+
                 {visibleDapps.map((item) => (
                     <ListItemCard
                         item={item}
