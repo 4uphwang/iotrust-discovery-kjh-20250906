@@ -11,6 +11,11 @@ import Banner from "./Banner";
 const DiscoveryPage = () => {
     const { t, i18n } = useTranslation();
     const { dapps, favorites, deleteFavorite } = useDappsData();
+    const visibleDapps = dapps.filter(item =>
+        (!item.visibleFor || item.visibleFor.includes(i18n.language)) &&
+        (!item.platform || item.platform.includes('iOS')) &&
+        (!item.environment || item.environment.includes(CURRENT_ENV))
+    );
 
     // 바텀시트 제어용 상태
     const [selectedItem, setSelectedItem] = useState<ListItem | null>(null);
@@ -59,7 +64,7 @@ const DiscoveryPage = () => {
             {/* 서비스 리스트 영역 */}
             <div className="px-8 w-full flex flex-col gap-y-2">
                 <div className="text-xl text-left">{t('dapp_list_title')}</div>
-                {dapps.map((item) => (
+                {visibleDapps.map((item) => (
                     <ListItemCard
                         item={item}
                         key={item.id}

@@ -9,8 +9,6 @@ export type ListItemCardProps = {
     onDelete?: (item: ListItem) => void;
     showDelete?: boolean;
     showLink?: boolean;
-    currentPlatform?: 'iOS' | 'Android' | 'Web';
-    currentEnvironment?: 'dev' | 'stage' | 'prod';
 };
 
 const ListItemCard = ({
@@ -20,21 +18,10 @@ const ListItemCard = ({
     onDelete,
     showDelete = !!onDelete,
     showLink = false,
-    currentPlatform = 'Web',
-    currentEnvironment = 'prod',
 }: ListItemCardProps) => {
     const { t, i18n } = useTranslation();
     const currentLang = i18n.language.split("-")[0];
-
-    // 노출 조건 확인
-    const isVisible =
-        (!item.visibleFor || item.visibleFor.includes(currentLang)) &&
-        (!item.platform || item.platform.includes(currentPlatform)) &&
-        (!item.environment || item.environment.includes(currentEnvironment));
-
-    if (!isVisible) return null;
-
-    const descriptionText = item.description?.[currentLang];
+    const descriptionText = item.description?.[currentLang] ?? "";
 
     return (
         <div
