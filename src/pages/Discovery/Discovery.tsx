@@ -1,9 +1,10 @@
+import Banner from "./Banner";
 
 const DiscoveryPage = () => {
     return (
         <div className="min-h-screen w-screen bg-white text-black">
             {/* 배너 영역 */}
-            배너
+            <Banner />
 
             {/* 즐겨찾기 영역 */}
             <div className="p-4">

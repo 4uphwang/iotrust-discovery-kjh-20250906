@@ -5,6 +5,9 @@ import { initReactI18next } from "react-i18next";
 import enTranslation from "../locales/en/translation.json";
 import koTranslation from "../locales/ko/translation.json";
 
+export const supportLanguage = ["ko", "en"] as const;
+export type SupportedLanguage = (typeof supportLanguage)[number];
+
 i18n
     .use(LanguageDetector) //브라우저 언어 감지 플러그인
     .use(initReactI18next)
