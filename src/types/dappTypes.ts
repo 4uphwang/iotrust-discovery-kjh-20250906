@@ -4,6 +4,7 @@ export type MultiLangString = {
 };
 
 export type ListItem = {
+    id: string;
     name: string;
     description?: MultiLangString;
     icon: string;
