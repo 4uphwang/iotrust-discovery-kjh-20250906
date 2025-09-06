@@ -8,16 +8,29 @@ import { useDappsData } from "../../hooks/useDappsData";
 import { CURRENT_ENV } from "../../lib/env";
 import type { ListItem } from "../../types/dappTypes";
 import BannerSection from "./BannerSection";
+import { isAndroid, isIOS } from "../../utils/platform";
 
 const DiscoveryPage = () => {
     const { t, i18n } = useTranslation();
-    const { dapps, favorites, deleteFavorite, loadingDapps, loadingFavorites, errorDapps, errorFavorites, fetchAll } = useDappsData();
+    const { dapps, favorites, deleteFavorite, loadingDapps, loadingFavorites, errorDapps, errorFavorites } = useDappsData();
 
-    const visibleDapps = dapps.filter(item =>
-        (!item.visibleFor || item.visibleFor.includes(i18n.language)) &&
-        (!item.platform || item.platform.includes('iOS')) &&
-        (!item.environment || item.environment.includes(CURRENT_ENV))
-    );
+    const visibleDapps = dapps.filter(item => {
+        // 언어 조건
+        const languageMatch = !item.visibleFor || item.visibleFor.includes(i18n.language);
+
+        // 플랫폼 조건
+        let platformMatch = true;
+        if (item.platform) {
+            platformMatch =
+                (isIOS && item.platform.includes('iOS')) ||
+                (isAndroid && item.platform.includes('Android'));
+        }
+
+        // 환경 조건
+        const envMatch = !item.environment || item.environment.includes(CURRENT_ENV);
+
+        return languageMatch && platformMatch && envMatch;
+    });
 
     // 바텀시트 제어용 상태
     const [selectedItem, setSelectedItem] = useState<ListItem | null>(null);
