@@ -51,30 +51,29 @@ export default function Banner() {
             >
                 {currentBanners.map((banner: any, idx: number) => (
                     <SwiperSlide key={idx}>
-                        <img src={banner.image} alt="banner" className="w-full h-48 object-cover" />
-                        {/* 배너 설명 & 버튼 */}
-                        {
-                            banner.description && (
-                                <div className="absolute top-8 left-5 flex flex-col text-white z-50">
-                                    <p className="text-xl text-left whitespace-pre-wrap">{renderDescription(banner.description, banner.boldKeywords)}</p>
-                                    {banner.buttonText && (
-                                        <a
-                                            href={banner.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="mt-8 inline-block w-fit bg-white !text-black !font-bold text-lg px-5 py-2 rounded-full"
-                                        >
-                                            {banner.buttonText}
-                                        </a>
-                                    )}
-                                </div>
-                            )
-                        }
+                        <a
+                            href={banner.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative block w-full h-48"
+                        >
+                            <img src={banner.image} alt="banner" className="w-full h-48 object-cover" />
+                            {
+                                banner.description && (
+                                    <div className="absolute w-full top-8 left-5 flex flex-col text-white z-50">
+                                        <p className="text-xl text-left whitespace-pre-wrap">{renderDescription(banner.description, banner.boldKeywords)}</p>
+                                        {banner.buttonText && (
+                                            <span className="mt-8 inline-block w-fit bg-white !text-black !font-bold text-lg px-5 py-2 rounded-full">{banner.buttonText}</span>
+                                        )}
+                                    </div>
+                                )
+                            }
 
-                        {/* 하단 우측 인덱스 */}
-                        <div className="absolute bottom-3 right-3 text-white text-sm bg-black/50 px-2 py-1 rounded">
-                            {idx + 1} / {total}
-                        </div>
+                            {/* 하단 우측 인덱스 */}
+                            <div className="absolute bottom-3 right-3 text-white text-sm bg-black/50 px-2 py-1 rounded">
+                                {idx + 1} / {total}
+                            </div>
+                        </a>
                     </SwiperSlide>
                 ))}
             </Swiper>
